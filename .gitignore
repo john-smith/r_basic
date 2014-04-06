@@ -1,0 +1,7 @@
+*.html
+*.md
+.Rhistory
+.RData
+.Rproj.user
+
+!README.md

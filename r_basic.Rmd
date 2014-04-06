@@ -342,9 +342,10 @@ runif(n = 10, min = 1, max = 10)
 
 * apply系
 * 分布(p, q, r)
-* data frame操作系
+* data操作系
  * outer
  * xtabs
+ * plyr
 * grepl
 * strsplit
 * plot系
@@ -366,7 +367,7 @@ runif(n = 10, min = 1, max = 10)
 * ファイル
  * read/write系
  * stringsAsFactors
-* execl
+* excel
 * sql
 
 ## その他
@@ -386,3 +387,32 @@ runif(n = 10, min = 1, max = 10)
 ## knitr
 
 ## 参考文献
+* [Rで学ぶデータ・プログラミング](http://www.amazon.co.jp/dp/4320110293/)
+* [Rによるやさしい統計学](http://www.amazon.co.jp/dp/4274067106/)
+* [The R tips](http://www.amazon.co.jp/dp/4274067831/)
+* [RとRubyによるデータ解析入門](http://www.amazon.co.jp/dp/4873116155/)
+* [Rクックブック](http://www.amazon.co.jp/dp/4873115337/)
+* [Rグラフィックスクックブック](http://www.amazon.co.jp/dp/4873116538/)
+* [入門機械学習](http://www.amazon.co.jp/dp/4873115949/)
+* [Rによるテキストマイニング入門](http://www.amazon.co.jp/dp/4627848412/)
+* [RjpWiki](http://www.okada.jp.org/RWiki/)
+* [seekR.jp](http://seekr.jp/)
+* [CRAN](http://cran.r-project.org/web/views/)
+* [10分でわかるR言語入門](http://www.slideshare.net/akiaki5516/10rver2-6)
+* [～knitr+pandocではじめる～『R MarkdownでReproducible Research』](http://www.slideshare.net/teramonagi/tokyo-r36-20140222)
+
+
+統計・機械学習に触れるなら
+* [入門統計学](http://www.amazon.co.jp/dp/4274068552/)
+* [フリーソフトではじめる機械学習入門](http://www.amazon.co.jp/dp/4627852118/)
+* [データマイニングの基礎](http://www.amazon.co.jp/dp/4274203484/)
+* [統計学入門](http://www.amazon.co.jp/dp/4130420658/)
+* [Rによる統計解析](http://www.amazon.co.jp/dp/4274067572/)
+* [イラストで学ぶ機械学習](http://www.amazon.co.jp/dp/4061538217/)
+* [データ分析のための統計モデリング入門](http://www.amazon.co.jp/dp/400006973X/)
+* [Rによるデータサイエンス](http://www.amazon.co.jp/dp/4627096011/)
+* [パターン認識と機械学習](http://www.amazon.co.jp/dp/4621061224/)
+
+その他アルゴリズム設計などたぶん触れない話題(Rでやってもね・・・って話)
+* [アルゴリズム設計マニュアル](http://www.amazon.co.jp/dp/4621085107/)
+* [プログラミングコンテストチャレンジブック](http://www.amazon.co.jp/dp/4839941068/)

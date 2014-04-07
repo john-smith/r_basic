@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Rの基本的な使い方</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h1>Rの基本的な使い方</h1>
+
+<p>プログラミング経験者向け。今までほかの言語に全く触れたことがない人には不親切。<br/>
+統計や機械学習についてはライブラリの使い方は説明しても理論的な説明書かない予定</p>
+
+<h2>インストール</h2>
+
+<p><a href="http://cran.r-project.org/">公式</a>からダウンロード</p>
+
+<p>インストールはbinならインストーラ起動<br/>
+ソースから入れるなら</p>
+
+<pre><code>$ ./configure
+$ make
+</code></pre>
+
+<p>yumやapt、homebrewなどパッケージ管理システムも使える</p>
+
+<h2>起動</h2>
+
+<p>コマンドで</p>
+
+<pre><code>$ R
+</code></pre>
+
+<p>またはアイコンから起動</p>
+
+<h2>RStudioのインストール</h2>
+
+<p>デスクトップ版とサーバ版がある<br/>
+インストール方法は<a href="https://www.rstudio.com/">公式</a>を参照</p>
+
+<p>必要なければ入れなくてもよい</p>
+
+<h3>RStudioの説明</h3>
+
+<p>そのうち</p>
+
+<h2>基本文法</h2>
+
+<h3>四則演算</h3>
+
+<pre><code class="r">1 + 1
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">2 - 1
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">3 * 2
+</code></pre>
+
+<pre><code>## [1] 6
+</code></pre>
+
+<pre><code class="r">4/3
+</code></pre>
+
+<pre><code>## [1] 1.333
+</code></pre>
+
+<pre><code class="r"># 剰余は「%」ではなく「%%」なので注意
+4%%3
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<h3>変数</h3>
+
+<p>「&lt;-」演算子で代入</p>
+
+<pre><code class="r">hoge &lt;- 1 + 1
+</code></pre>
+
+<p>変数名のみで実行か、print, catなどで表示</p>
+
+<pre><code class="r">hoge
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">print(hoge)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">cat(hoge, &quot;\n&quot;)
+</code></pre>
+
+<pre><code>## 2
+</code></pre>
+
+<p>catは自動的に改行してくれないが複数変数並べれる</p>
+
+<pre><code class="r">cat(1, 2, 3, &quot;ダー&quot;, &quot;\n&quot;)
+</code></pre>
+
+<pre><code>## 1 2 3 ダー
+</code></pre>
+
+<p>変数に使える文字は基本的にほかの言語と同じと考えてよい<br/>
+ただし、一部特殊なものもある</p>
+
+<p>「.」を変数名の一部として使える<br/>
+Rではスネークケースの「_」の代わりに使うことがある<br/>
+Googleの規約では変数は「.」区切り、関数は「_」区切りらしい</p>
+
+<pre><code class="r">this.is.a.pen &lt;- &quot;This is a pen.&quot;
+this.is.a.pen
+</code></pre>
+
+<pre><code>## [1] &quot;This is a pen.&quot;
+</code></pre>
+
+<p>日本語も変数名に使える(コーディング規約で推奨してない場合がおおい)</p>
+
+<pre><code class="r">ほげ &lt;- 1 + 3
+ほげ
+</code></pre>
+
+<pre><code>## [1] 4
+</code></pre>
+
+<h4>変数の表示関係</h4>
+
+<p>関数や演算の戻り値を変数で受け取らない場合は出力される</p>
+
+<pre><code class="r">1 + 1
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">head(iris)  # 先頭5行を返す関数
+</code></pre>
+
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+</code></pre>
+
+<pre><code class="r">hoge  # 変数そのままも値を垂れ流しにしてるのと一緒
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<p>headやtail, plotなどの表示する機能と思われがちな関数も実は変数に代入できたりする</p>
+
+<p>変数に値を代入する際に「()」でくくると同時に表示もできる</p>
+
+<pre><code class="r">(hoge &lt;- 1 + 1)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">hoge
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<h4>文字列</h4>
+
+<p>ほかの言語とだいたい同じく、シングルクォートかダブルクォートでくくる<br/>
+単独の文字型はなく、すべて文字列型</p>
+
+<pre><code class="r">hoge &lt;- &quot;String:hoge&quot;
+moji &lt;- &quot;a&quot;  # これも文字列
+</code></pre>
+
+<h4>vector</h4>
+
+<p>Rの基本概念。ほかのプログラミング言語でいうところの1次元配列</p>
+
+<pre><code class="r"># x:yでxからyまでの1刻みvectorを作る
+a &lt;- 1:5
+a
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4 5
+</code></pre>
+
+<pre><code class="r">
+# 「[]」で特定の要素を取り出す
+# ほかの多くの言語と違い添字のインデックスは1から始まるので注意
+a[2]
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">
+# インデックスにvectorを指定することで複数要素を取り出せる
+a[3:5]
+</code></pre>
+
+<pre><code>## [1] 3 4 5
+</code></pre>
+
+<pre><code class="r">
+# マイナスをつけるとそのインデックスの要素以外を取り出す
+a[-2]
+</code></pre>
+
+<pre><code>## [1] 1 3 4 5
+</code></pre>
+
+<pre><code class="r">
+# c関数で全要素を個別に指定してvectorを作る
+b &lt;- c(1, 3, 5, 7, 9)
+b
+</code></pre>
+
+<pre><code>## [1] 1 3 5 7 9
+</code></pre>
+
+<pre><code class="r">
+# seq関数で始点、終点、刻み幅を設定した一定間隔でvectorを作る
+seq(-1, 1, 0.1)
+</code></pre>
+
+<pre><code>##  [1] -1.0 -0.9 -0.8 -0.7 -0.6 -0.5 -0.4 -0.3 -0.2 -0.1  0.0  0.1  0.2  0.3
+## [15]  0.4  0.5  0.6  0.7  0.8  0.9  1.0
+</code></pre>
+
+<p>vectorへの演算は各要素ごとに行われる</p>
+
+<pre><code class="r">a &lt;- c(1, 2, 3)
+b &lt;- c(4, 5, 6)
+a + b
+</code></pre>
+
+<pre><code>## [1] 5 7 9
+</code></pre>
+
+<pre><code class="r">a * b
+</code></pre>
+
+<pre><code>## [1]  4 10 18
+</code></pre>
+
+<h4>matrix</h4>
+
+<p>行列。2次元配列<br/>
+matrix関数でvectorから作成<br/>
+作成元がvectorなことに注意</p>
+
+<pre><code class="r"># nrow, ncolで行数、列数を指定。どちらか一方は省略可
+matrix(c(1, 2, 3, 4), nrow = 2, ncol = 2)
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]    1    3
+## [2,]    2    4
+</code></pre>
+
+<pre><code class="r">
+# byrowで行 -&gt; 列の順に指定
+matrix(c(1, 2, 3, 4), nrow = 2, byrow = TRUE)
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+</code></pre>
+
+<pre><code class="r">
+# tで転地
+t(matrix(c(1, 2, 3, 4), nrow = 2))
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+</code></pre>
+
+<p>行列の特定要素へのアクセス<br/>
+行 -&gt; 列の順に指定する</p>
+
+<pre><code class="r">a &lt;- matrix(c(1, 2, 3, 4), nrow = 2)
+# 1行1列目
+a[1, 1]
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">
+# 1行2列目
+a[1, 2]
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">
+# 2行1列目
+a[2, 1]
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">
+# 1行目全部
+a[1, ]
+</code></pre>
+
+<pre><code>## [1] 1 3
+</code></pre>
+
+<pre><code class="r">
+# vectorで範囲指定
+a[1:2, 1]
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<p>行列の演算は各要素ごとに行われる。かけ算の挙動も要素ごとなので注意</p>
+
+<pre><code class="r">a &lt;- matrix(c(1, 2, 3, 4), nrow = 2)
+b &lt;- matrix(c(5, 6, 7, 7), nrow = 2)
+a + b
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]    6   10
+## [2,]    8   11
+</code></pre>
+
+<pre><code class="r">a * b
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]    5   21
+## [2,]   12   28
+</code></pre>
+
+<pre><code class="r"># 行列のかけ算
+a %*% b
+</code></pre>
+
+<pre><code>##      [,1] [,2]
+## [1,]   23   28
+## [2,]   34   42
+</code></pre>
+
+<h4>array</h4>
+
+<p>3次元以上の配列<br/>
+あまり使わないので例を出して終了</p>
+
+<pre><code class="r"># 3次元
+HairEyeColor
+</code></pre>
+
+<pre><code>## , , Sex = Male
+## 
+##        Eye
+## Hair    Brown Blue Hazel Green
+##   Black    32   11    10     3
+##   Brown    53   50    25    15
+##   Red      10   10     7     7
+##   Blond     3   30     5     8
+## 
+## , , Sex = Female
+## 
+##        Eye
+## Hair    Brown Blue Hazel Green
+##   Black    36    9     5     2
+##   Brown    66   34    29    14
+##   Red      16    7     7     7
+##   Blond     4   64     5     8
+</code></pre>
+
+<pre><code class="r">
+# 4次元
+Titanic
+</code></pre>
+
+<pre><code>## , , Age = Child, Survived = No
+## 
+##       Sex
+## Class  Male Female
+##   1st     0      0
+##   2nd     0      0
+##   3rd    35     17
+##   Crew    0      0
+## 
+## , , Age = Adult, Survived = No
+## 
+##       Sex
+## Class  Male Female
+##   1st   118      4
+##   2nd   154     13
+##   3rd   387     89
+##   Crew  670      3
+## 
+## , , Age = Child, Survived = Yes
+## 
+##       Sex
+## Class  Male Female
+##   1st     5      1
+##   2nd    11     13
+##   3rd    13     14
+##   Crew    0      0
+## 
+## , , Age = Adult, Survived = Yes
+## 
+##       Sex
+## Class  Male Female
+##   1st    57    140
+##   2nd    14     80
+##   3rd    75     76
+##   Crew  192     20
+</code></pre>
+
+<h4>list</h4>
+
+<p>各要素ごとに別な型を入れておける<br/>
+普段自分で作ることはあまりないが関数の戻り値で利用されていることがよくある</p>
+
+<pre><code class="r">a &lt;- list(hoge = &quot;hoge&quot;, fuga = c(1, 2, 3), piyo = 1)
+a
+</code></pre>
+
+<pre><code>## $hoge
+## [1] &quot;hoge&quot;
+## 
+## $fuga
+## [1] 1 2 3
+## 
+## $piyo
+## [1] 1
+</code></pre>
+
+<pre><code class="r">
+# 「[[]]」または名前で各要素にアクセス
+a[[1]]
+</code></pre>
+
+<pre><code>## [1] &quot;hoge&quot;
+</code></pre>
+
+<pre><code class="r">a$piyo
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">
+# 保持してるvectorの特定要素にアクセス
+a[[2]][2]
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<h4>factor</h4>
+
+<p>因子型。文字列とダミー変数を持っている<br/>
+表示上は文字列だが、内部ではIDで持ちたいなどカテゴリ変数で使う<br/>
+内部では数値なので文字列のまま扱うより計算が早い</p>
+
+<pre><code class="r">a &lt;- factor(c(&quot;hoge&quot;, &quot;fuga&quot;, &quot;piyo&quot;))
+str(a)
+</code></pre>
+
+<pre><code>##  Factor w/ 3 levels &quot;fuga&quot;,&quot;hoge&quot;,..: 2 1 3
+</code></pre>
+
+<h4>data frame</h4>
+
+<p>Rといったらこれ<br/>
+2次元の表の形式でデータを扱う<br/>
+matrixと違って列ごとに別な型を扱える</p>
+
+<pre><code class="r">a &lt;- data.frame(a = c(1, 2, 3), b = c(&quot;hoge&quot;, &quot;fuga&quot;, &quot;piyo&quot;))
+a
+</code></pre>
+
+<pre><code>##   a    b
+## 1 1 hoge
+## 2 2 fuga
+## 3 3 piyo
+</code></pre>
+
+<pre><code class="r"># namesで列ごとに名前をつけれる
+names(a) &lt;- c(&quot;aaa&quot;, &quot;bbb&quot;)
+a
+</code></pre>
+
+<pre><code>##   aaa  bbb
+## 1   1 hoge
+## 2   2 fuga
+## 3   3 piyo
+</code></pre>
+
+<pre><code class="r">
+# 名前で列にアクセス
+a$aaa
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+<pre><code class="r">
+# インデックスでアクセスする際は基本的にmatrixと同じ
+a[1, ]
+</code></pre>
+
+<pre><code>##   aaa  bbb
+## 1   1 hoge
+</code></pre>
+
+<pre><code class="r">
+# インデックスが1つだとその列をdata frameで取得
+a[1]
+</code></pre>
+
+<pre><code>##   aaa
+## 1   1
+## 2   2
+## 3   3
+</code></pre>
+
+<h3>パッケージ</h3>
+
+<p>include, import, requireのような仕組み<br/>
+読み込むことでそのパッケージの機能を使えるようになる</p>
+
+<pre><code class="r"># library関数で読み込む
+library(ggplot2)
+
+# require関数を使うと読み込みが成功したか失敗したかをTURE/FALSEで返してくれる
+a &lt;- require(tm)
+</code></pre>
+
+<pre><code>## Loading required package: tm
+</code></pre>
+
+<pre><code class="r">a
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>パッケージを追加することで、より便利な関数や、
+新しい機能の実装とも出会える</p>
+
+<p>Rではパッケージの追加自体もコードから行える</p>
+
+<pre><code>install.packages(&quot;ggplot2&quot;)
+</code></pre>
+
+<p>すでにインストールされてるか確認して、
+無ければインストールしてからライブラリを読み込むとすると便利</p>
+
+<pre><code class="r">if (!require(e1071)) {
+    install.packages(&quot;e1071&quot;)
+    library(e1071)
+}
+</code></pre>
+
+<pre><code>## Loading required package: e1071
+</code></pre>
+
+<pre><code>## Warning: there is no package called &#39;e1071&#39;
+</code></pre>
+
+<pre><code>## Error: trying to use CRAN without setting a mirror
+</code></pre>
+
+<p>インストールされているパッケージの確認</p>
+
+<pre><code class="r"># 長いから先頭の5行だけ
+head(installed.packages())
+</code></pre>
+
+<pre><code>##           Package    
+## abind     &quot;abind&quot;    
+## animation &quot;animation&quot;
+## arm       &quot;arm&quot;      
+## base      &quot;base&quot;     
+## bitops    &quot;bitops&quot;   
+## boot      &quot;boot&quot;     
+##           LibPath                                                         
+## abind     &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+## animation &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+## arm       &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+## base      &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+## bitops    &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+## boot      &quot;/Library/Frameworks/R.framework/Versions/3.0/Resources/library&quot;
+##           Version  Priority     
+## abind     &quot;1.4-0&quot;  NA           
+## animation &quot;2.2&quot;    NA           
+## arm       &quot;1.6-10&quot; NA           
+## base      &quot;3.0.2&quot;  &quot;base&quot;       
+## bitops    &quot;1.0-6&quot;  NA           
+## boot      &quot;1.3-9&quot;  &quot;recommended&quot;
+##           Depends                                                    
+## abind     &quot;R (&gt;= 1.5.0)&quot;                                             
+## animation &quot;R (&gt;= 2.14.0)&quot;                                            
+## arm       &quot;R (&gt;= 3.0.0), MASS, Matrix (&gt;= 1.0), stats, lme4 (&gt;= 1.0)&quot;
+## base      NA                                                         
+## bitops    NA                                                         
+## boot      &quot;R (&gt;= 3.0.0), graphics, stats&quot;                            
+##           Imports                      LinkingTo Suggests            
+## abind     NA                           NA        NA                  
+## animation &quot;MASS&quot;                       NA        NA                  
+## arm       &quot;abind, methods, coda, nlme&quot; NA        &quot;R2WinBUGS, foreign&quot;
+## base      NA                           NA        NA                  
+## bitops    NA                           NA        NA                  
+## boot      NA                           NA        &quot;MASS, survival&quot;    
+##           Enhances License           License_is_FOSS License_restricts_use
+## abind     NA       &quot;LGPL (&gt;= 2)&quot;     NA              NA                   
+## animation NA       &quot;GPL-2 | GPL-3&quot;   NA              NA                   
+## arm       NA       &quot;GPL (&gt;= 2)&quot;      NA              NA                   
+## base      NA       &quot;Part of R 3.0.2&quot; NA              NA                   
+## bitops    NA       &quot;GPL (&gt;= 2)&quot;      NA              NA                   
+## boot      NA       &quot;Unlimited&quot;       NA              NA                   
+##           OS_type MD5sum NeedsCompilation Built  
+## abind     NA      NA     NA               &quot;3.0.2&quot;
+## animation NA      NA     &quot;no&quot;             &quot;3.0.2&quot;
+## arm       NA      NA     &quot;no&quot;             &quot;3.0.2&quot;
+## base      NA      NA     NA               &quot;3.0.2&quot;
+## bitops    NA      NA     &quot;yes&quot;            &quot;3.0.2&quot;
+## boot      NA      NA     NA               &quot;3.0.2&quot;
+</code></pre>
+
+<p>パッケージはCRANと呼ばれるリポジトリで管理されている</p>
+
+<h2>if, for</h2>
+
+<h3>if</h3>
+
+<p>ほかのプログラミング言語と同じ</p>
+
+<pre><code class="r">a &lt;- 3
+if (a == 2) {
+    print(&quot;aは2だ&quot;)
+} else if (a &gt; 2) {
+    print(&quot;aは2より大きい&quot;)
+} else {
+    print(&quot;aは2より小さい&quot;)
+}
+</code></pre>
+
+<pre><code>## [1] &quot;aは2より大きい&quot;
+</code></pre>
+
+<h3>ifelse関数</h3>
+
+<p>vectorのすべての要素にたいしてifを実行する関数</p>
+
+<pre><code class="r">a &lt;- c(1, 2, 3, 4)
+ifelse(a &gt; 2, &quot;hoge&quot;, &quot;fuga&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;fuga&quot; &quot;fuga&quot; &quot;hoge&quot; &quot;hoge&quot;
+</code></pre>
+
+<h3>for</h3>
+
+<p>inを使ってvectorの全要素にたいしてループ<br/>
+ただし、Rのfor文は遅いことで有名で、<br/>
+applyなど全要素にたいして処理する関数があるので可能な限り使わない</p>
+
+<pre><code class="r">a &lt;- c(1, 2, 3)
+for (i in a) {
+    print(i)
+}
+</code></pre>
+
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+</code></pre>
+
+<h3>関数</h3>
+
+<p>ほかのプログラミング言語と同じく関数を作れる</p>
+
+<pre><code>関数名 &lt;- function(引数リスト) {
+  関数の中身
+}
+</code></pre>
+
+<p>functionで関数を作って変数に代入することで名前をつけれる感じ<br/>
+代入しなくてもいいが二度と呼び出せない</p>
+
+<p>関数を引数に受け取るような場面で無名関数を定義する以外<br/>
+は変数に入れないことは通常ない</p>
+
+<p>returnはほかの多くの言語と異なり、関数呼び出しのように必ず括弧でくくる必要がある</p>
+
+<pre><code class="r">fuga &lt;- function(a) {
+    return(a + 1)
+}
+fuga(1)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">
+# 引数が2つ
+fuga2 &lt;- function(a, b) {
+    return(a + b)
+}
+fuga2(1, 3)
+</code></pre>
+
+<pre><code>## [1] 4
+</code></pre>
+
+<h3>デフォルト引数と引数の順番</h3>
+
+<p>引数に特定の値が渡されなかった場合のデフォルトの値が定義できる</p>
+
+<pre><code class="r">fuga &lt;- function(a, b = 3) {
+    return(a + b)
+}
+# 変数bにデフォルトの3が使われる
+fuga(1)
+</code></pre>
+
+<pre><code>## [1] 4
+</code></pre>
+
+<p>さらに、呼び出し時に変数名を指定することで任意の順番で値を指定できる</p>
+
+<pre><code class="r"># fuga(5, 2)と同じ
+fuga(b = 2, a = 5)
+</code></pre>
+
+<pre><code>## [1] 7
+</code></pre>
+
+<pre><code class="r">
+# デフォルト引数があれば省略できるのも同じ
+fuga(a = 5)
+</code></pre>
+
+<pre><code>## [1] 8
+</code></pre>
+
+<p>引数に変数名を指定しない場合は前から順番に指定したことになる</p>
+
+<h2>基本的な関数</h2>
+
+<pre><code class="r">a &lt;- seq(1, 10, 1)
+a
+</code></pre>
+
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10
+</code></pre>
+
+<pre><code class="r"># 合計
+sum(a)
+</code></pre>
+
+<pre><code>## [1] 55
+</code></pre>
+
+<pre><code class="r"># 平均
+mean(a)
+</code></pre>
+
+<pre><code>## [1] 5.5
+</code></pre>
+
+<pre><code class="r"># 普遍分散
+var(a)
+</code></pre>
+
+<pre><code>## [1] 9.167
+</code></pre>
+
+<pre><code class="r"># 標本分散
+n &lt;- length(a)
+var(a) * (n - 1)/n
+</code></pre>
+
+<pre><code>## [1] 8.25
+</code></pre>
+
+<pre><code class="r"># 標準偏差
+sd(a)
+</code></pre>
+
+<pre><code>## [1] 3.028
+</code></pre>
+
+<pre><code class="r">
+# 最大値
+max(a)
+</code></pre>
+
+<pre><code>## [1] 10
+</code></pre>
+
+<pre><code class="r"># 最小値
+min(a)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r"># レンジ
+range(a)
+</code></pre>
+
+<pre><code>## [1]  1 10
+</code></pre>
+
+<pre><code class="r"># 四分位数
+quantile(a)
+</code></pre>
+
+<pre><code>##    0%   25%   50%   75%  100% 
+##  1.00  3.25  5.50  7.75 10.00
+</code></pre>
+
+<pre><code class="r"># 任意の刻み幅
+quantile(a, probs = seq(0, 1, 0.1))
+</code></pre>
+
+<pre><code>##   0%  10%  20%  30%  40%  50%  60%  70%  80%  90% 100% 
+##  1.0  1.9  2.8  3.7  4.6  5.5  6.4  7.3  8.2  9.1 10.0
+</code></pre>
+
+<pre><code class="r">
+# 行列の行ごと、列ごとの合計
+b &lt;- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3)
+b
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9
+</code></pre>
+
+<pre><code class="r">rowSums(b)
+</code></pre>
+
+<pre><code>## [1] 12 15 18
+</code></pre>
+
+<pre><code class="r">colSums(b)
+</code></pre>
+
+<pre><code>## [1]  6 15 24
+</code></pre>
+
+<pre><code class="r">
+# 乱数 min~maxの乱数をn個
+runif(n = 10, min = 1, max = 10)
+</code></pre>
+
+<pre><code>##  [1] 9.413 2.231 6.392 4.180 6.484 8.213 9.814 6.150 1.823 8.467
+</code></pre>
+
+<pre><code class="r">
+# シードを固定して乱数生成 毎回同じ値を出せる
+set.seed(1)
+runif(n = 10, min = 1, max = 10)
+</code></pre>
+
+<pre><code>##  [1] 3.390 4.349 6.156 9.174 2.815 9.086 9.502 6.947 6.662 1.556
+</code></pre>
+
+<h2>apply系関数</h2>
+
+<h3>apply</h3>
+
+<p>行単位、列単位に対して操作する</p>
+
+<pre><code class="r"># 第2引数が1だと行単位、2だと列単位
+b
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9
+</code></pre>
+
+<pre><code class="r">apply(b, 1, mean)
+</code></pre>
+
+<pre><code>## [1] 4 5 6
+</code></pre>
+
+<pre><code class="r">apply(b, 2, var)
+</code></pre>
+
+<pre><code>## [1] 1 1 1
+</code></pre>
+
+<p>引数を取る関数やその場で定義した無名関数を利用できる</p>
+
+<pre><code class="r">apply(b, 1, &quot;+&quot;, 100)
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]  101  102  103
+## [2,]  104  105  106
+## [3,]  107  108  109
+</code></pre>
+
+<pre><code class="r">apply(b, 2, paste, &quot;hoge&quot;, &quot; &quot;)
+</code></pre>
+
+<pre><code>##      [,1]       [,2]       [,3]      
+## [1,] &quot;1 hoge  &quot; &quot;4 hoge  &quot; &quot;7 hoge  &quot;
+## [2,] &quot;2 hoge  &quot; &quot;5 hoge  &quot; &quot;8 hoge  &quot;
+## [3,] &quot;3 hoge  &quot; &quot;6 hoge  &quot; &quot;9 hoge  &quot;
+</code></pre>
+
+<pre><code class="r">apply(b, 1, function(x) x[1] * 100 + x[2] * 10 + x[3])
+</code></pre>
+
+<pre><code>## [1] 147 258 369
+</code></pre>
+
+<h3>lapply/sapply</h3>
+
+<p>各要素に対する処理を出力をリスト形式で返す</p>
+
+<pre><code class="r">a &lt;- 1:10
+# 全ての要素に2を足す 結果をlistで返す
+lapply(a, &quot;+&quot;, 2)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] 3
+## 
+## [[2]]
+## [1] 4
+## 
+## [[3]]
+## [1] 5
+## 
+## [[4]]
+## [1] 6
+## 
+## [[5]]
+## [1] 7
+## 
+## [[6]]
+## [1] 8
+## 
+## [[7]]
+## [1] 9
+## 
+## [[8]]
+## [1] 10
+## 
+## [[9]]
+## [1] 11
+## 
+## [[10]]
+## [1] 12
+</code></pre>
+
+<pre><code class="r">
+# hogeと結合 結果をvectorで返す
+sapply(a, paste, &quot;hoge&quot;)
+</code></pre>
+
+<pre><code>##  [1] &quot;1 hoge&quot;  &quot;2 hoge&quot;  &quot;3 hoge&quot;  &quot;4 hoge&quot;  &quot;5 hoge&quot;  &quot;6 hoge&quot;  &quot;7 hoge&quot; 
+##  [8] &quot;8 hoge&quot;  &quot;9 hoge&quot;  &quot;10 hoge&quot;
+</code></pre>
+
+<p>###分布系
+norm(正規分布), t(t分布), binom(二項分布),などの分布名とその先頭に<br/>
+d(確率密度関数)、p(累積密度関数), q(分位点), r(乱数)で対応する値を取得できる</p>
+
+<pre><code class="r"># 平均0, 標準偏差1で0の時の確率密度
+dnorm(0, 0, 1)
+</code></pre>
+
+<pre><code>## [1] 0.3989
+</code></pre>
+
+<pre><code class="r">
+# t分布自由度1の時の0の累積密度
+pt(0, 1)
+</code></pre>
+
+<pre><code>## [1] 0.5
+</code></pre>
+
+<pre><code class="r">
+# 二項分布で0~1の0.1位刻みで各確率となる値 試行回数10、確率1/2
+qbinom(seq(0, 1, 0.1), size = 10, prob = 0.5)
+</code></pre>
+
+<pre><code>##  [1]  0  3  4  4  5  5  5  6  6  7 10
+</code></pre>
+
+<pre><code class="r">
+# 自由度10のカイ二乗分布に従う乱数を10個生成
+rchisq(n = 10, df = 10)
+</code></pre>
+
+<pre><code>##  [1]  5.856  7.793 11.609  7.751  5.929  6.557  7.775  8.810  5.614 12.821
+</code></pre>
+
+<h3>文字列操作系</h3>
+
+<p>特定文字列を含むものを検索</p>
+
+<pre><code class="r"># 検索クエリ
+queries &lt;- c(&quot;http://search.yahoo.co.jp/search?p=yahoo&amp;aq=-1&amp;oq=&amp;ei=UTF-8&amp;fr=top_ga1_sa&amp;x=wrt&quot;, #yahoo
+             &quot;http://search.yahoo.co.jp/search?p=google&amp;aq=-1&amp;oq=&amp;ei=UTF-8&amp;fr=top_ga1_sa&amp;x=wrt&quot;, # google
+             &quot;http://search.yahoo.co.jp/search?p=claris&amp;aq=-1&amp;oq=&amp;ei=UTF-8&amp;fr=top_ga1_sa&amp;x=wrt&quot;, # claris
+             &quot;http://search.yahoo.co.jp/search?p=kotoko&amp;aq=-1&amp;oq=&amp;ei=UTF-8&amp;fr=top_ga1_sa&amp;x=wrt&quot;) # kotoko
+
+# clarisを含むものを検索
+# 正規表現も使える
+# 各要素ごとのにtrue/falseで帰ってくる
+(claris.index &lt;- grepl(&quot;claris&quot;, queries))
+</code></pre>
+
+<pre><code>## [1] FALSE FALSE  TRUE FALSE
+</code></pre>
+
+<pre><code class="r"># 配列のインデックスに指定することで、trueの要素のみを取得できる
+queries[claris.index]
+</code></pre>
+
+<pre><code>## [1] &quot;http://search.yahoo.co.jp/search?p=claris&amp;aq=-1&amp;oq=&amp;ei=UTF-8&amp;fr=top_ga1_sa&amp;x=wrt&quot;
+</code></pre>
+
+<p>文字列の一部を取り出す</p>
+
+<pre><code class="r"># [?&amp;]で文字列をsplitすることでパラメータを分解
+# 分解したものはベクトルの各要素ごとにlistになり
+# さらにリスト各要素は区切った文字列ごとのvectorになっている
+(search.word &lt;- strsplit(queries, &quot;[?&amp;]&quot;))
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=yahoo&quot;                         
+## [3] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+## [5] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+## [7] &quot;x=wrt&quot;                           
+## 
+## [[2]]
+## [1] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=google&quot;                        
+## [3] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+## [5] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+## [7] &quot;x=wrt&quot;                           
+## 
+## [[3]]
+## [1] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=claris&quot;                        
+## [3] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+## [5] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+## [7] &quot;x=wrt&quot;                           
+## 
+## [[4]]
+## [1] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=kotoko&quot;                        
+## [3] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+## [5] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+## [7] &quot;x=wrt&quot;
+</code></pre>
+
+<pre><code class="r"># unlistで全体を一つの配列にまとめる
+(search.word &lt;- unlist(search.word))
+</code></pre>
+
+<pre><code>##  [1] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=yahoo&quot;                         
+##  [3] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+##  [5] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+##  [7] &quot;x=wrt&quot;                            &quot;http://search.yahoo.co.jp/search&quot;
+##  [9] &quot;p=google&quot;                         &quot;aq=-1&quot;                           
+## [11] &quot;oq=&quot;                              &quot;ei=UTF-8&quot;                        
+## [13] &quot;fr=top_ga1_sa&quot;                    &quot;x=wrt&quot;                           
+## [15] &quot;http://search.yahoo.co.jp/search&quot; &quot;p=claris&quot;                        
+## [17] &quot;aq=-1&quot;                            &quot;oq=&quot;                             
+## [19] &quot;ei=UTF-8&quot;                         &quot;fr=top_ga1_sa&quot;                   
+## [21] &quot;x=wrt&quot;                            &quot;http://search.yahoo.co.jp/search&quot;
+## [23] &quot;p=kotoko&quot;                         &quot;aq=-1&quot;                           
+## [25] &quot;oq=&quot;                              &quot;ei=UTF-8&quot;                        
+## [27] &quot;fr=top_ga1_sa&quot;                    &quot;x=wrt&quot;
+</code></pre>
+
+<pre><code class="r"># pで始まる要素で検索文字列を取得
+(search.word &lt;- search.word[grepl(&quot;^p&quot;, search.word)])
+</code></pre>
+
+<pre><code>## [1] &quot;p=yahoo&quot;  &quot;p=google&quot; &quot;p=claris&quot; &quot;p=kotoko&quot;
+</code></pre>
+
+<pre><code class="r"># 「=」で区切ることでパラメータ名と値を分解
+(search.word &lt;- strsplit(search.word, &quot;=&quot;))
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;p&quot;     &quot;yahoo&quot;
+## 
+## [[2]]
+## [1] &quot;p&quot;      &quot;google&quot;
+## 
+## [[3]]
+## [1] &quot;p&quot;      &quot;claris&quot;
+## 
+## [[4]]
+## [1] &quot;p&quot;      &quot;kotoko&quot;
+</code></pre>
+
+<pre><code class="r"># 各要素の値の部分を取得
+(search.word &lt;- sapply(search.word, function(x) {
+    return(x[2])
+}))
+</code></pre>
+
+<pre><code>## [1] &quot;yahoo&quot;  &quot;google&quot; &quot;claris&quot; &quot;kotoko&quot;
+</code></pre>
+
+<p>文字列を結合</p>
+
+<pre><code class="r">kashi1 &lt;- c(&quot;きっとみんな大事なこと&quot;)
+kashi2 &lt;- c(&quot;少しずつ忘れてくから&quot;)
+# 複数の変数を結合
+paste(kashi1, kashi2, sep = &quot; &quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;きっとみんな大事なこと 少しずつ忘れてくから&quot;
+</code></pre>
+
+<pre><code class="r">
+kashi &lt;- c(&quot;記憶が開く音&quot;, &quot;聞きたいから&quot;, &quot;君に差し出そう&quot;)
+# 単一のvectorを結合
+paste(kashi, collapse = &quot; &quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;記憶が開く音 聞きたいから 君に差し出そう&quot;
+</code></pre>
+
+<h3>ファイル入出力系とデータ操作基礎</h3>
+
+<pre><code class="r"># csv読み込み
+data &lt;- read.csv(&quot;ClariS.csv&quot;)
+data
+</code></pre>
+
+<pre><code>##            artist                      title       date
+## 1          ClariS                      irony 2010-10-20
+## 2          ClariS                   コネクト 2011-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 4          ClariS               ナイショの話 2012-02-02
+## 5          ClariS                    Wake Up 2012-08-15
+## 6          ClariS                   ルミナス 2012-10-10
+## 7          ClariS                    reunion 2013-04-17
+## 8          ClariS                   カラフル 2013-10-30
+## 9          ClariS                      CLICK 2014-01-29
+## 10         ClariS                       STEP 2014-04-16
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+</code></pre>
+
+<pre><code class="r">str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    18 obs. of  3 variables:
+##  $ artist: Factor w/ 2 levels &quot;ClariS&quot;,&quot;アリス☆クララ&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ title : Factor w/ 18 levels &quot;CLICK&quot;,&quot;Don&#39;t say lazy&quot;,..: 3 12 4 13 10 16 6 11 1 8 ...
+##  $ date  : Factor w/ 18 levels &quot;2009-10-10&quot;,&quot;2009-10-17&quot;,..: 9 10 11 12 13 14 15 16 17 18 ...
+</code></pre>
+
+<pre><code class="r">
+# 文字列をfactorとして扱わない
+data &lt;- read.csv(&quot;ClariS.csv&quot;, stringsAsFactors = FALSE)
+data
+</code></pre>
+
+<pre><code>##            artist                      title       date
+## 1          ClariS                      irony 2010-10-20
+## 2          ClariS                   コネクト 2011-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 4          ClariS               ナイショの話 2012-02-02
+## 5          ClariS                    Wake Up 2012-08-15
+## 6          ClariS                   ルミナス 2012-10-10
+## 7          ClariS                    reunion 2013-04-17
+## 8          ClariS                   カラフル 2013-10-30
+## 9          ClariS                      CLICK 2014-01-29
+## 10         ClariS                       STEP 2014-04-16
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+</code></pre>
+
+<pre><code class="r">str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    18 obs. of  3 variables:
+##  $ artist: chr  &quot;ClariS&quot; &quot;ClariS&quot; &quot;ClariS&quot; &quot;ClariS&quot; ...
+##  $ title : chr  &quot;irony&quot; &quot;コネクト&quot; &quot;nexus&quot; &quot;ナイショの話&quot; ...
+##  $ date  : chr  &quot;2010-10-20&quot; &quot;2011-02-02&quot; &quot;2011-09-14&quot; &quot;2012-02-02&quot; ...
+</code></pre>
+
+<pre><code class="r">
+# ヘッダの無いcsv
+data &lt;- read.csv(&quot;ClariS_no_header.csv&quot;, header = FALSE, stringsAsFactors = FALSE)
+data
+</code></pre>
+
+<pre><code>##                V1                         V2         V3
+## 1          ClariS                      irony 2010-10-20
+## 2          ClariS                   コネクト 2011-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 4          ClariS               ナイショの話 2012-02-02
+## 5          ClariS                    Wake Up 2012-08-15
+## 6          ClariS                   ルミナス 2012-10-10
+## 7          ClariS                    reunion 2013-04-17
+## 8          ClariS                   カラフル 2013-10-30
+## 9          ClariS                      CLICK 2014-01-29
+## 10         ClariS                       STEP 2014-04-16
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+</code></pre>
+
+<pre><code class="r"># ヘッダを付加
+names(data) &lt;- c(&quot;artist&quot;, &quot;title&quot;, &quot;date&quot;)
+data
+</code></pre>
+
+<pre><code>##            artist                      title       date
+## 1          ClariS                      irony 2010-10-20
+## 2          ClariS                   コネクト 2011-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 4          ClariS               ナイショの話 2012-02-02
+## 5          ClariS                    Wake Up 2012-08-15
+## 6          ClariS                   ルミナス 2012-10-10
+## 7          ClariS                    reunion 2013-04-17
+## 8          ClariS                   カラフル 2013-10-30
+## 9          ClariS                      CLICK 2014-01-29
+## 10         ClariS                       STEP 2014-04-16
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+</code></pre>
+
+<pre><code class="r">
+# 日付のdata frameを作る
+tekitou.df &lt;- data.frame(date = data$date)
+tekitou.df
+</code></pre>
+
+<pre><code>##          date
+## 1  2010-10-20
+## 2  2011-02-02
+## 3  2011-09-14
+## 4  2012-02-02
+## 5  2012-08-15
+## 6  2012-10-10
+## 7  2013-04-17
+## 8  2013-10-30
+## 9  2014-01-29
+## 10 2014-04-16
+## 11 2009-10-10
+## 12 2009-10-17
+## 13 2009-11-03
+## 14 2009-11-14
+## 15 2009-11-29
+## 16 2009-12-12
+## 17 2009-12-31
+## 18 2010-05-08
+</code></pre>
+
+<pre><code class="r"># 列を追加
+tekitou.df$no &lt;- 1:nrow(data)
+tekitou.df
+</code></pre>
+
+<pre><code>##          date no
+## 1  2010-10-20  1
+## 2  2011-02-02  2
+## 3  2011-09-14  3
+## 4  2012-02-02  4
+## 5  2012-08-15  5
+## 6  2012-10-10  6
+## 7  2013-04-17  7
+## 8  2013-10-30  8
+## 9  2014-01-29  9
+## 10 2014-04-16 10
+## 11 2009-10-10 11
+## 12 2009-10-17 12
+## 13 2009-11-03 13
+## 14 2009-11-14 14
+## 15 2009-11-29 15
+## 16 2009-12-12 16
+## 17 2009-12-31 17
+## 18 2010-05-08 18
+</code></pre>
+
+<pre><code class="r">
+# 結合 by.x, by.yをvectorで指定すれば複数列で結合もできる
+ketugou &lt;- merge(data, tekitou.df, by.x = &quot;date&quot;, by.y = &quot;date&quot;)
+ketugou
+</code></pre>
+
+<pre><code>##          date         artist                      title no
+## 1  2009-10-10 アリス☆クララ                STEP TO YOU 11
+## 2  2009-10-17 アリス☆クララ ブラック☆ロックシューター 12
+## 3  2009-11-03 アリス☆クララ              Scrap &amp; Build 13
+## 4  2009-11-14 アリス☆クララ         私が髪を切った理由 14
+## 5  2009-11-29 アリス☆クララ            only my railgun 15
+## 6  2009-12-12 アリス☆クララ           私の知らない物語 16
+## 7  2009-12-31 アリス☆クララ                   ライオン 17
+## 8  2010-05-08 アリス☆クララ             Don&#39;t say lazy 18
+## 9  2010-10-20         ClariS                      irony  1
+## 10 2011-02-02         ClariS                   コネクト  2
+## 11 2011-09-14         ClariS                      nexus  3
+## 12 2012-02-02         ClariS               ナイショの話  4
+## 13 2012-08-15         ClariS                    Wake Up  5
+## 14 2012-10-10         ClariS                   ルミナス  6
+## 15 2013-04-17         ClariS                    reunion  7
+## 16 2013-10-30         ClariS                   カラフル  8
+## 17 2014-01-29         ClariS                      CLICK  9
+## 18 2014-04-16         ClariS                       STEP 10
+</code></pre>
+
+<pre><code class="r">
+# dateを日付に変換
+data$date &lt;- as.Date(data$date, &quot;%Y-%m-%d&quot;)
+str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    18 obs. of  3 variables:
+##  $ artist: chr  &quot;ClariS&quot; &quot;ClariS&quot; &quot;ClariS&quot; &quot;ClariS&quot; ...
+##  $ title : chr  &quot;irony&quot; &quot;コネクト&quot; &quot;nexus&quot; &quot;ナイショの話&quot; ...
+##  $ date  : Date, format: &quot;2010-10-20&quot; &quot;2011-02-02&quot; ...
+</code></pre>
+
+<pre><code class="r">
+# 日付でソート
+# ソート結果のインデックスのvectorが帰ってくるのでそれを指定するとその順になる
+# == ソートされる
+data.order &lt;- order(data$date)
+data.order
+</code></pre>
+
+<pre><code>##  [1] 11 12 13 14 15 16 17 18  1  2  3  4  5  6  7  8  9 10
+</code></pre>
+
+<pre><code class="r">data[data.order, ]
+</code></pre>
+
+<pre><code>##            artist                      title       date
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+## 1          ClariS                      irony 2010-10-20
+## 2          ClariS                   コネクト 2011-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 4          ClariS               ナイショの話 2012-02-02
+## 5          ClariS                    Wake Up 2012-08-15
+## 6          ClariS                   ルミナス 2012-10-10
+## 7          ClariS                    reunion 2013-04-17
+## 8          ClariS                   カラフル 2013-10-30
+## 9          ClariS                      CLICK 2014-01-29
+## 10         ClariS                       STEP 2014-04-16
+</code></pre>
+
+<pre><code class="r"># 降順
+data[order(data$date, decreasing = T), ]
+</code></pre>
+
+<pre><code>##            artist                      title       date
+## 10         ClariS                       STEP 2014-04-16
+## 9          ClariS                      CLICK 2014-01-29
+## 8          ClariS                   カラフル 2013-10-30
+## 7          ClariS                    reunion 2013-04-17
+## 6          ClariS                   ルミナス 2012-10-10
+## 5          ClariS                    Wake Up 2012-08-15
+## 4          ClariS               ナイショの話 2012-02-02
+## 3          ClariS                      nexus 2011-09-14
+## 2          ClariS                   コネクト 2011-02-02
+## 1          ClariS                      irony 2010-10-20
+## 18 アリス☆クララ             Don&#39;t say lazy 2010-05-08
+## 17 アリス☆クララ                   ライオン 2009-12-31
+## 16 アリス☆クララ           私の知らない物語 2009-12-12
+## 15 アリス☆クララ            only my railgun 2009-11-29
+## 14 アリス☆クララ         私が髪を切った理由 2009-11-14
+## 13 アリス☆クララ              Scrap &amp; Build 2009-11-03
+## 12 アリス☆クララ ブラック☆ロックシューター 2009-10-17
+## 11 アリス☆クララ                STEP TO YOU 2009-10-10
+</code></pre>
+
+<pre><code class="r">
+# unique
+data$artist
+</code></pre>
+
+<pre><code>##  [1] &quot;ClariS&quot;         &quot;ClariS&quot;         &quot;ClariS&quot;         &quot;ClariS&quot;        
+##  [5] &quot;ClariS&quot;         &quot;ClariS&quot;         &quot;ClariS&quot;         &quot;ClariS&quot;        
+##  [9] &quot;ClariS&quot;         &quot;ClariS&quot;         &quot;アリス☆クララ&quot; &quot;アリス☆クララ&quot;
+## [13] &quot;アリス☆クララ&quot; &quot;アリス☆クララ&quot; &quot;アリス☆クララ&quot; &quot;アリス☆クララ&quot;
+## [17] &quot;アリス☆クララ&quot; &quot;アリス☆クララ&quot;
+</code></pre>
+
+<pre><code class="r">unique(data$artist)
+</code></pre>
+
+<pre><code>## [1] &quot;ClariS&quot;         &quot;アリス☆クララ&quot;
+</code></pre>
+
+<pre><code class="r">
+# outerで結合する 九九の表
+c1 &lt;- 1:9
+c2 &lt;- 1:9
+outer(c1, c2, &quot;*&quot;)
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+##  [1,]    1    2    3    4    5    6    7    8    9
+##  [2,]    2    4    6    8   10   12   14   16   18
+##  [3,]    3    6    9   12   15   18   21   24   27
+##  [4,]    4    8   12   16   20   24   28   32   36
+##  [5,]    5   10   15   20   25   30   35   40   45
+##  [6,]    6   12   18   24   30   36   42   48   54
+##  [7,]    7   14   21   28   35   42   49   56   63
+##  [8,]    8   16   24   32   40   48   56   64   72
+##  [9,]    9   18   27   36   45   54   63   72   81
+</code></pre>
+
+<pre><code class="r">
+# xtabs
+xtabs(~data$artist + data$date)
+</code></pre>
+
+<pre><code>##                 data$date
+## data$artist      2009-10-10 2009-10-17 2009-11-03 2009-11-14 2009-11-29
+##   ClariS                  0          0          0          0          0
+##   アリス☆クララ          1          1          1          1          1
+##                 data$date
+## data$artist      2009-12-12 2009-12-31 2010-05-08 2010-10-20 2011-02-02
+##   ClariS                  0          0          0          1          1
+##   アリス☆クララ          1          1          1          0          0
+##                 data$date
+## data$artist      2011-09-14 2012-02-02 2012-08-15 2012-10-10 2013-04-17
+##   ClariS                  1          1          1          1          1
+##   アリス☆クララ          0          0          0          0          0
+##                 data$date
+## data$artist      2013-10-30 2014-01-29 2014-04-16
+##   ClariS                  1          1          1
+##   アリス☆クララ          0          0          0
+</code></pre>
+
+<pre><code class="r">hatubai &lt;- xtabs(ketugou$no ~ ketugou$artist + ketugou$date)
+
+# csvに保存
+write.csv(hatubai, &quot;hatubai.csv&quot;)
+
+# ddplyで集計
+library(plyr)
+ddply(data, .(artist), summarise, Freq = length(artist))
+</code></pre>
+
+<pre><code>##           artist Freq
+## 1         ClariS   10
+## 2 アリス☆クララ    8
+</code></pre>
+
+<ul>
+<li>plot系
+
+<ul>
+<li>plot</li>
+<li>ggplot2</li>
+<li>lattice</li>
+</ul></li>
+<li>型変換系(as)</li>
+<li>do.call</li>
+<li>toupper/tolower</li>
+<li>行列計算系</li>
+</ul>
+
+<h2>ファイル入出力</h2>
+
+<ul>
+<li>ファイル
+
+<ul>
+<li>read/write系</li>
+<li>stringsAsFactors</li>
+</ul></li>
+<li>excel</li>
+<li>sql</li>
+</ul>
+
+<h2>その他</h2>
+
+<ul>
+<li>?でヘルプ</li>
+<li>括弧なし関数名で中身覗ける系(ジェネリック的なものも)</li>
+<li>プリセットなデータ</li>
+</ul>
+
+<h2>統計・機械学習</h2>
+
+<ul>
+<li>lm</li>
+<li>glm</li>
+<li>princomp</li>
+<li>検定(test)</li>
+<li>クラスタ分析(dist, hclust)</li>
+<li>分散分析系</li>
+<li>各種機械学習ライブラリ(e1071パッケージなど)</li>
+</ul>
+
+<h2>knitr</h2>
+
+<h2>参考文献</h2>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/dp/4320110293/">Rで学ぶデータ・プログラミング</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4274067106/">Rによるやさしい統計学</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4274067831/">The R tips</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4873116155/">RとRubyによるデータ解析入門</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4873115337/">Rクックブック</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4873116538/">Rグラフィックスクックブック</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4873115949/">入門機械学習</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4627848412/">Rによるテキストマイニング入門</a></li>
+<li><a href="http://www.okada.jp.org/RWiki/">RjpWiki</a></li>
+<li><a href="http://seekr.jp/">seekR.jp</a></li>
+<li><a href="http://cran.r-project.org/web/views/">CRAN</a></li>
+<li><a href="http://www.slideshare.net/akiaki5516/10rver2-6">10分でわかるR言語入門</a></li>
+<li><a href="http://www.slideshare.net/teramonagi/tokyo-r36-20140222">～knitr+pandocではじめる～『R MarkdownでReproducible Research』</a></li>
+<li><a href="http://www.slideshare.net/teramonagi/tokyo-r30-20130420">「plyrパッケージで君も前処理スタ☆」改め「plyrパッケージ徹底入門」</a></li>
+</ul>
+
+<p>統計・機械学習に触れるなら</p>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/dp/4274068552/">入門統計学</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4627852118/">フリーソフトではじめる機械学習入門</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4274203484/">データマイニングの基礎</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4130420658/">統計学入門</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4274067572/">Rによる統計解析</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4339027510/">言語処理のための機械学習入門</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4061538217/">イラストで学ぶ機械学習</a></li>
+<li><a href="http://www.amazon.co.jp/dp/400006973X/">データ分析のための統計モデリング入門</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4627096011/">Rによるデータサイエンス</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4621061224/">パターン認識と機械学習</a></li>
+</ul>
+
+<p>その他アルゴリズム設計などたぶん触れない話題(Rでやってもね・・・って話)</p>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/dp/4621085107/">アルゴリズム設計マニュアル</a></li>
+<li><a href="http://www.amazon.co.jp/dp/4839941068/">プログラミングコンテストチャレンジブック</a></li>
+</ul>
+
+</body>
+
+</html>
+

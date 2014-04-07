@@ -75,7 +75,7 @@ this.is.a.pen
 ほげ
 ```
 
-### 変数の表示関係
+#### 変数の表示関係
 関数や演算の戻り値を変数で受け取らない場合は出力される
 ```{r}
 1 + 1
@@ -90,7 +90,7 @@ headやtail, plotなどの表示する機能と思われがちな関数も実は
 hoge
 ```
 
-### 文字列
+#### 文字列
 ほかの言語とだいたい同じく、シングルクォートかダブルクォートでくくる  
 単独の文字型はなく、すべて文字列型
 ```{r}
@@ -98,7 +98,7 @@ hoge <- "String:hoge"
 moji <- 'a' # これも文字列
 ```
 
-### vector
+#### vector
 Rの基本概念。ほかのプログラミング言語でいうところの1次元配列
 
 ```{r}
@@ -132,7 +132,7 @@ a + b
 a * b
 ```
 
-### matrix
+#### matrix
 行列。2次元配列  
 matrix関数でvectorから作成  
 作成元がvectorなことに注意
@@ -177,9 +177,9 @@ a * b
 a %*% b
 ```
 
-### array
+#### array
 3次元以上の配列  
-あまり使わない
+あまり使わないので例を出して終了
 ```{r}
 # 3次元
 HairEyeColor
@@ -188,7 +188,7 @@ HairEyeColor
 Titanic
 ```
 
-### list
+#### list
 各要素ごとに別な型を入れておける  
 普段自分で作ることはあまりないが関数の戻り値で利用されていることがよくある
 ```{r}
@@ -203,7 +203,7 @@ a$piyo
 a[[2]][2]
 ```
 
-### factor
+#### factor
 因子型。文字列とダミー変数を持っている  
 表示上は文字列だが、内部ではIDで持ちたいなどカテゴリ変数で使う  
 内部では数値なので文字列のまま扱うより計算が早い
@@ -212,7 +212,7 @@ a <- factor(c("hoge", "fuga", "piyo"))
 str(a)
 ```
 
-### data frame
+#### data frame
 Rといったらこれ  
 2次元の表の形式でデータを扱う  
 matrixと違って列ごとに別な型を扱える
@@ -232,6 +232,43 @@ a[1, ]
 # インデックスが1つだとその列をdata frameで取得
 a[1]
 ```
+
+### パッケージ
+include, import, requireのような仕組み  
+読み込むことでそのパッケージの機能を使えるようになる
+```{r}
+# library関数で読み込む
+library(ggplot2)
+
+# require関数を使うと読み込みが成功したか失敗したかをTURE/FALSEで返してくれる
+a <- require(tm)
+a
+```
+
+パッケージを追加することで、より便利な関数や、
+新しい機能の実装とも出会える
+
+Rではパッケージの追加自体もコードから行える
+```
+install.packages("ggplot2")
+```
+
+すでにインストールされてるか確認して、
+無ければインストールしてからライブラリを読み込むとすると便利
+```{r}
+if(!require(e1071)) {
+  install.packages("e1071")
+  library(e1071)
+}
+```
+
+インストールされているパッケージの確認
+```{r}
+# 長いから先頭の5行だけ
+head(installed.packages())
+```
+
+パッケージはCRANと呼ばれるリポジトリで管理されている
 
 ## if, for
 ### if
@@ -330,6 +367,23 @@ var(a) * (n - 1) / n
 # 標準偏差
 sd(a)
 
+# 最大値
+max(a)
+# 最小値
+min(a)
+# レンジ
+range(a)
+# 四分位数
+quantile(a)
+# 任意の刻み幅
+quantile(a, probs= seq(0, 1, 0.1))
+
+# 行列の行ごと、列ごとの合計
+b <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3)
+b
+rowSums(b)
+colSums(b)
+
 # 乱数
 # min~maxの乱数をn個
 runif(n = 10, min = 1, max = 10)
@@ -340,28 +394,172 @@ set.seed(1)
 runif(n = 10, min = 1, max = 10)
 ```
 
-* apply系
-* 分布(p, q, r)
-* data操作系
- * outer
- * xtabs
- * plyr
-* grepl
-* strsplit
+## apply系関数
+### apply
+行単位、列単位に対して操作する
+```{r}
+# 第2引数が1だと行単位、2だと列単位
+b
+apply(b, 1, mean) 
+apply(b, 2, var)
+```
+
+引数を取る関数やその場で定義した無名関数を利用できる
+```{r}
+apply(b, 1, "+", 100)
+apply(b, 2, paste, "hoge", " ")
+apply(b, 1, function(x) x[1] * 100 + x[2] * 10 + x[3])
+```
+
+### lapply/sapply
+各要素に対する処理を出力をリスト形式で返す
+```{r}
+a <- 1:10
+# 全ての要素に2を足す
+# 結果をlistで返す
+lapply(a, "+", 2)
+
+# hogeと結合
+# 結果をvectorで返す
+sapply(a, paste, "hoge")
+```
+
+###分布系
+norm(正規分布), t(t分布), binom(二項分布),などの分布名とその先頭に   
+d(確率密度関数)、p(累積密度関数), q(分位点), r(乱数)で対応する値を取得できる
+```{r}
+# 平均0, 標準偏差1で0の時の確率密度
+dnorm(0, 0, 1)
+
+# t分布自由度1の時の0の累積密度
+pt(0, 1)
+
+# 二項分布で0~1の0.1位刻みで各確率となる値
+# 試行回数10、確率1/2
+qbinom(seq(0, 1, 0.1), size = 10, prob = 0.5)
+
+# 自由度10のカイ二乗分布に従う乱数を10個生成
+rchisq(n = 10, df = 10)
+```
+
+### 文字列操作系
+特定文字列を含むものを検索
+```{r}
+# 検索クエリ
+queries <- c("http://search.yahoo.co.jp/search?p=yahoo&aq=-1&oq=&ei=UTF-8&fr=top_ga1_sa&x=wrt", #yahoo
+             "http://search.yahoo.co.jp/search?p=google&aq=-1&oq=&ei=UTF-8&fr=top_ga1_sa&x=wrt", # google
+             "http://search.yahoo.co.jp/search?p=claris&aq=-1&oq=&ei=UTF-8&fr=top_ga1_sa&x=wrt", # claris
+             "http://search.yahoo.co.jp/search?p=kotoko&aq=-1&oq=&ei=UTF-8&fr=top_ga1_sa&x=wrt") # kotoko
+
+# clarisを含むものを検索
+# 正規表現も使える
+# 各要素ごとのにtrue/falseで帰ってくる
+(claris.index <- grepl("claris", queries))
+# 配列のインデックスに指定することで、trueの要素のみを取得できる
+queries[claris.index]
+```
+
+文字列の一部を取り出す
+```{r}
+# [?&]で文字列をsplitすることでパラメータを分解
+# 分解したものはベクトルの各要素ごとにlistになり
+# さらにリスト各要素は区切った文字列ごとのvectorになっている
+(search.word <- strsplit(queries, "[?&]"))
+# unlistで全体を一つの配列にまとめる
+(search.word <- unlist(search.word))
+# pで始まる要素で検索文字列を取得
+(search.word <- search.word[grepl("^p", search.word)])
+# 「=」で区切ることでパラメータ名と値を分解
+(search.word <- strsplit(search.word, "="))
+# 各要素の値の部分を取得
+(search.word <- sapply(search.word, function(x) { return(x[2])}))
+```
+
+文字列を結合
+```{r}
+kashi1 <- c("きっとみんな大事なこと")
+kashi2 <- c("少しずつ忘れてくから")
+# 複数の変数を結合
+paste(kashi1, kashi2, sep = " ")
+
+kashi <- c("記憶が開く音", "聞きたいから", "君に差し出そう")
+# 単一のvectorを結合
+paste(kashi, collapse = " ")
+```
+
+### ファイル入出力系とデータ操作基礎
+```{r}
+# csv読み込み
+data <- read.csv("ClariS.csv")
+data
+str(data)
+
+# 文字列をfactorとして扱わない
+data <- read.csv("ClariS.csv", stringsAsFactors = FALSE)
+data
+str(data)
+
+# ヘッダの無いcsv
+data <- read.csv("ClariS_no_header.csv", header = FALSE, stringsAsFactors = FALSE)
+data
+# ヘッダを付加
+names(data) <- c("artist", "title", "date")
+data
+
+# 日付のdata frameを作る
+tekitou.df <- data.frame(date = data$date)
+tekitou.df
+# 列を追加
+tekitou.df$no <- 1:nrow(data)
+tekitou.df
+
+# 結合
+# by.x, by.yをvectorで指定すれば複数列で結合もできる
+ketugou <- merge(data, tekitou.df, by.x = "date", by.y = "date")
+ketugou
+
+# dateを日付に変換
+data$date <- as.Date(data$date, "%Y-%m-%d")
+str(data)
+
+# 日付でソート
+# ソート結果のインデックスのvectorが帰ってくるのでそれを指定するとその順になる == ソートされる
+data.order <- order(data$date)
+data.order
+data[data.order, ]
+# 降順
+data[order(data$date, decreasing = T), ]
+
+# unique
+data$artist
+unique(data$artist)
+
+# outerで結合する
+# 九九の表
+c1 <- 1:9
+c2 <- 1:9
+outer(c1, c2, "*")
+
+# xtabs
+xtabs(~ data$artist + data$date)
+hatubai <- xtabs(ketugou$no ~ ketugou$artist + ketugou$date)
+
+# csvに保存
+write.csv(hatubai, "hatubai.csv")
+
+# ddplyで集計
+library(plyr)
+ddply(data, .(artist), summarise, Freq = length(artist))
+```
+
 * plot系
  * plot
  * ggplot2
  * lattice
 * 型変換系(as)
-* paste
-* unlist
-* unique
+* do.call
 * toupper/tolower
 * 行列計算系
-
-## パッケージ
-* library/require
-* intall.packages
 
 ## ファイル入出力
 * ファイル
@@ -400,6 +598,7 @@ runif(n = 10, min = 1, max = 10)
 * [CRAN](http://cran.r-project.org/web/views/)
 * [10分でわかるR言語入門](http://www.slideshare.net/akiaki5516/10rver2-6)
 * [～knitr+pandocではじめる～『R MarkdownでReproducible Research』](http://www.slideshare.net/teramonagi/tokyo-r36-20140222)
+* [「plyrパッケージで君も前処理スタ☆」改め「plyrパッケージ徹底入門」](http://www.slideshare.net/teramonagi/tokyo-r30-20130420)
 
 
 統計・機械学習に触れるなら
